@@ -8,6 +8,8 @@ import com.example.stopwatch.databinding.ActivityMainBinding
 import java.util.*
 import kotlin.concurrent.timer
 
+// 네트워크 작업, 데이터베이스 작업, 계산량이 많은 작업은 백그라운드 스레드에서 진행하는 것이 좋다.
+
 class MainActivity : AppCompatActivity() , View.OnClickListener {
 
     var isRunning = false
