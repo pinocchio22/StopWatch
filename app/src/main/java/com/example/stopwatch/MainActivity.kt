@@ -4,10 +4,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.example.stopwatch.databinding.ActivityMainBinding
+import java.util.*
+import kotlin.concurrent.timer
 
 class MainActivity : AppCompatActivity() , View.OnClickListener {
 
     var isRunning = false
+    var timer : Timer?= null
+    var time = 0
     private lateinit var binding : ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +33,24 @@ class MainActivity : AppCompatActivity() , View.OnClickListener {
 
     private fun start() {
         // 측정시작
+        binding.btnStart.text = "일시정지"
+        binding.btnStart.setBackgroundColor(getColor(R.color.red))
+        isRunning = true
+
+        timer = timer(period = 10) {
+            time++ // 10밀리초 단위
+            val milli_second = time % 100
+            val second = (time % 6000) / 100
+            val minute = time / 6000
+
+            runOnUiThread {
+                if (isRunning) {
+                    binding.tvMillisecond.text = if (milli_second < 10) ".0$milli_second" else ".$milli_second" // 초
+                    binding.tvSecond.text = if (second < 10) ":0$second" else ":$second"
+                    binding.tvMinute.text = "$minute"
+                }
+            }
+        }
     }
 
     private fun pause() {
