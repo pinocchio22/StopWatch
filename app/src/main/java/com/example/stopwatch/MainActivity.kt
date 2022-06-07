@@ -1,5 +1,6 @@
 package com.example.stopwatch
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -55,9 +56,24 @@ class MainActivity : AppCompatActivity() , View.OnClickListener {
 
     private fun pause() {
         // 측정 정지
+        binding.btnStart.text = "시작"
+        binding.btnStart.setBackgroundColor(getColor(R.color.blue))
+        isRunning = false
+        timer?.cancel()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun refresh() {
         // 초기화
+        timer?.cancel()
+        binding.btnStart.text = "시작"
+        binding.btnStart.setBackgroundColor(getColor(R.color.blue))
+        isRunning = false
+
+        // 타이머 초기화
+        time = 0
+        binding.tvMillisecond.text = ".00"
+        binding.tvSecond.text = ":00"
+        binding.tvMinute.text = "00"
     }
 }
